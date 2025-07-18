@@ -41,8 +41,8 @@ class Pagination extends StatelessWidget {
                   onPressed: () {
                     controller.animateToPage(
                       slides.length - 1,
-                      duration: Duration(microseconds: 300),
-                      curve: Curves.linear,
+                      duration: Duration(seconds: 1),
+                      curve: Curves.linearToEaseOut,
                     );
                   },
                   child: Text(

@@ -8,25 +8,25 @@ import 'package:healthy_mind_application/core/routes/Navigators.dart';
 import 'package:healthy_mind_application/features/auth/bloc/auth_bloc.dart';
 import 'package:healthy_mind_application/features/auth/bloc/auth_event.dart';
 import 'package:healthy_mind_application/features/auth/bloc/auth_state.dart';
-
 import 'package:healthy_mind_application/features/auth/presentation/widgets/SocialLogin.dart';
 import 'package:healthy_mind_application/features/auth/presentation/widgets/WellcomeScreen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController(text: "");
   final _passwordController = TextEditingController(text: "");
-  void _handleLogin(BuildContext context) {
+
+  void _handleRegister(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      context.read<AuthLoginBloc>().add(
-        LoginEvent(
+      context.read<AuthRegisterBloc>().add(
+        RegisterEvent(
           email: _emailController.text,
           password: _passwordController.text,
         ),
@@ -40,10 +40,20 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorConstant.white,
       body: SafeArea(
-        child: BlocBuilder<AuthLoginBloc, AuthLoginState>(
+        child: BlocBuilder<AuthRegisterBloc, AuthRegisterState>(
           builder: (context, state) {
-            final initLoginWidget = Column(
+            final initialRegisterWidget = Column(
               children: [
+                InputWidget(
+                  placeholder: 'Tên',
+                  type: InputType.text,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Vui lòng nhập Tên';
+                    }
+                    return null;
+                  },
+                ),
                 InputWidget(
                   placeholder: 'Email',
                   type: InputType.text,
@@ -77,30 +87,59 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                ButtonWidget(
-                  onPressed: () {},
-                  text: "Quên mật khẩu?",
-                  type: ButtonType.text,
-                ),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 ButtonWidget(
                   onPressed: () {
-                    _handleLogin(context);
+                    _handleRegister(context);
                   },
-                  text: "Đăng nhập",
+                  text: "Đăng ký",
                   type: ButtonType.primary,
                 ),
-                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Bạn đã có tài khoản?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: ColorConstant.subColor,
+                      ),
+                    ),
+                    ButtonWidget(
+                      onPressed: () {
+                        appRouter.go(registerScreen);
+                      },
+                      text: 'Đăng nhập ngay!',
+                      type: ButtonType.text,
+                      buttonStyles: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all<Color>(
+                          ColorConstant.info,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             );
 
-            final loadingLoginWidget = Column(
+            final loadingRegisterWidget = Column(
               children: [
+                InputWidget(
+                  placeholder: 'Tên',
+                  type: InputType.text,
+                  enabled: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Vui lòng nhập Tên';
+                    }
+                    return null;
+                  },
+                ),
                 InputWidget(
                   placeholder: 'Email',
                   type: InputType.text,
-                  controller: _emailController,
                   enabled: false,
+                  controller: _emailController,
                   validator: (value) {
                     String pattern =
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
@@ -116,8 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 InputWidget(
                   placeholder: 'Mật khẩu',
                   type: InputType.password,
-                  controller: _passwordController,
                   enabled: false,
+                  controller: _passwordController,
                   validator: (value) {
                     String pattern =
                         r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
@@ -131,17 +170,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                ButtonWidget(
-                  onPressed: () {},
-                  text: "Quên mật khẩu?",
-                  type: ButtonType.text,
-                ),
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 ButtonWidget(
                   onPressed: () {
-                    _handleLogin(context);
+                    _handleRegister(context);
                   },
-                  text: "Đăng nhập",
+                  text: "Đăng ký",
                   type: ButtonType.primary,
                   suffixIcon: CircularProgressIndicator(
                     color: ColorConstant.white,
@@ -153,12 +187,45 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Bạn đã có tài khoản?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: ColorConstant.subColor,
+                      ),
+                    ),
+                    ButtonWidget(
+                      onPressed: () {
+                        appRouter.go(registerScreen);
+                      },
+                      text: 'Đăng nhập ngay!',
+                      type: ButtonType.text,
+                      buttonStyles: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all<Color>(
+                          ColorConstant.info,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             );
 
-            failureLoginWidget(errorMessage) => Column(
+            failureRegisterWidget(errorMessage) => Column(
               children: [
+                InputWidget(
+                  placeholder: 'Tên',
+                  type: InputType.text,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Vui lòng nhập Tên';
+                    }
+                    return null;
+                  },
+                ),
                 InputWidget(
                   placeholder: 'Email',
                   type: InputType.text,
@@ -192,13 +259,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                ButtonWidget(
-                  onPressed: () {},
-                  text: "Quên mật khẩu?",
-                  type: ButtonType.text,
-                ),
+
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
                   child: Text(
                     errorMessage,
                     textAlign: TextAlign.center,
@@ -211,65 +274,94 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 ButtonWidget(
                   onPressed: () {
-                    _handleLogin(context);
+                    _handleRegister(context);
                   },
-                  text: "Đăng nhập",
+                  text: "Đăng ký",
                   type: ButtonType.primary,
                 ),
-                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Bạn đã có tài khoản?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: ColorConstant.subColor,
+                      ),
+                    ),
+                    ButtonWidget(
+                      onPressed: () {
+                        appRouter.go(registerScreen);
+                      },
+                      text: 'Đăng nhập ngay!',
+                      type: ButtonType.text,
+                      buttonStyles: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all<Color>(
+                          ColorConstant.info,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             );
 
-            final successLoginWidget = WellcomeScreen(
-              contentType: ContentType.login,
+            final successRegisterWidget = WellcomeScreen(
+              contentType: ContentType.register,
             );
 
-            final baseLayoutLogin = (switch (state) {
-              AuthLoginInitial() => initLoginWidget,
-              AuthLoginLoading() => loadingLoginWidget,
-              AuthLoginSuccess() => successLoginWidget,
-              AuthLoginFailure() => failureLoginWidget(state.errorMessage),
+            final baseLayoutRegister = (switch (state) {
+              AuthRegisterInitial() => initialRegisterWidget,
+              AuthRegisterLoading() => loadingRegisterWidget,
+              AuthRegisterSuccess() => successRegisterWidget,
+              AuthRegisterFailure() => failureRegisterWidget(
+                state.errorMessage,
+              ),
             });
 
-            return state is AuthLoginSuccess
-                ? successLoginWidget
-                : Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        HeaderWidget(title: 'Đăng nhập'),
-                        SizedBox(height: 32),
-                        Image.asset('assets/images/logo.png'),
-                        SizedBox(height: 16),
-                        Container(child: baseLayoutLogin),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Bạn chưa tạo tài khoản?",
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: ColorConstant.subColor,
-                              ),
-                            ),
-                            ButtonWidget(
-                              onPressed: () {
-                                appRouter.go(registerScreen);
-                              },
-                              text: 'Đăng ký ngay!',
-                              type: ButtonType.text,
-                              buttonStyles: ButtonStyle(
-                                foregroundColor: WidgetStateProperty.all<Color>(
-                                  ColorConstant.info,
+            return state is AuthRegisterSuccess
+                ? successRegisterWidget
+                : Column(
+                    children: [
+                      HeaderWidget(title: "Đăng ký", onBack: true),
+                      SizedBox(height: 20),
+                      Image.asset('assets/images/logo.png'),
+                      SizedBox(height: 12),
+                      Form(key: _formKey, child: baseLayoutRegister),
+                      SocialLogin(),
+                      SizedBox(height: 20),
+                      Column(
+                        children: [
+                          Text("Bằng cách tiếp tục, bạn đã đồng ý với các"),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ButtonWidget(
+                                onPressed: () {},
+                                text: "Điều khoản, Điều kiện sử dụng",
+                                type: ButtonType.text,
+                                buttonStyles: ButtonStyle(
+                                  padding: WidgetStateProperty.all<EdgeInsets>(
+                                    EdgeInsets.only(right: 4),
+                                  ),
+                                  foregroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                        ColorConstant.info,
+                                      ),
+                                  textStyle: WidgetStateProperty.all<TextStyle>(
+                                    TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 40),
-                        SocialLogin(),
-                      ],
-                    ),
+                              Text("của chúng tôi"),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   );
           },
         ),
