@@ -89,7 +89,7 @@ class Pagination extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                appRouter.go('/login');
+                appRouter.go(loginScreen);
               },
             ),
     );
