@@ -9,6 +9,9 @@ class ColorConstant {
   static Color subColor = const Color(0xFF696769);
   static Color disable = const Color(0xFFB9BABB);
   static Color white = const Color(0xFFFFFFFF);
+  static Color ccc = const Color(0xFFCCCCCC);
+  static Color transparent = const Color(0x00000000);
+
   // State color
   static Color active = const Color(0xFF287BFF);
   static Color info = const Color(0xFF4E91FC);
@@ -24,6 +27,13 @@ class FontSizeConstants {
   static double smallTitle = 20.0;
   static double mediumTitle = 24.0;
   static double largeTitle = 34.0;
+}
+
+class FontWeightConstants {
+  static FontWeight light = FontWeight.w300;
+  static FontWeight normal = FontWeight.w400;
+  static FontWeight medium = FontWeight.w500;
+  static FontWeight bold = FontWeight.w700;
 }
 
 class HeightConstants {

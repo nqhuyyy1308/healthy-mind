@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1004809261711",
+    "project_id": "healthy-mind-application",
+    "storage_bucket": "healthy-mind-application.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004809261711:android:c3f0e52d61dc2358b616fa",
+        "android_client_info": {
+          "package_name": "com.example.healthy_mind_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1t6MJUyb42CZVoHRrknBWg73-j8bM774"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
