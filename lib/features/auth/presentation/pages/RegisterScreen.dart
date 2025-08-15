@@ -9,7 +9,7 @@ import 'package:healthy_mind_application/core/constants/Constants.dart';
 import 'package:healthy_mind_application/core/routes/Navigators.dart';
 import 'package:healthy_mind_application/core/user_module/data/models/user_model.dart';
 import 'package:healthy_mind_application/features/auth/bloc/auth_bloc/auth_bloc.dart';
-import 'package:healthy_mind_application/features/auth/bloc/bloc/welcome_bloc.dart';
+import 'package:healthy_mind_application/features/auth/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:healthy_mind_application/features/auth/bloc/register_bloc/register_bloc.dart';
 import 'package:healthy_mind_application/features/auth/presentation/widgets/SocialLogin.dart';
 import 'package:healthy_mind_application/features/auth/presentation/widgets/WellcomeScreen.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:healthy_mind_application/features/auth/bloc/auth_bloc/auth_bloc.dart';
+import 'package:healthy_mind_application/features/auth/bloc/user_bloc/user_bloc.dart';
 import 'package:healthy_mind_application/features/home/presentation/pages/HomeScreen.dart';
 import 'package:healthy_mind_application/features/intro/data/models/SliderModel.dart';
 import 'package:healthy_mind_application/features/intro/presentation/widgets/Pagination.dart';
@@ -36,6 +37,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state.status == AuthStatus.authenticated) {
+          context.read<UserBloc>().add(
+            GetUser(userId: context.read<AuthBloc>().state.user!.uid),
+          );
           return HomeScreen();
         } else {
           return Scaffold(

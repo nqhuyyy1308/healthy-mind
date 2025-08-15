@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:healthy_mind_application/core/common_widgets/ButtonWidget.dart';
 import 'package:healthy_mind_application/core/constants/Constants.dart';
 import 'package:healthy_mind_application/core/routes/Navigators.dart';
-import 'package:healthy_mind_application/features/auth/bloc/bloc/welcome_bloc.dart';
+import 'package:healthy_mind_application/features/auth/bloc/welcome_bloc/welcome_bloc.dart';
 
 enum ContentType { login, register }
 

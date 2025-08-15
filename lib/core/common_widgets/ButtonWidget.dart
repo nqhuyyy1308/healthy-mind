@@ -4,12 +4,13 @@ import 'package:healthy_mind_application/core/constants/Constants.dart';
 enum ButtonType { primary, outlined, text }
 
 class ButtonWidget extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
   final ButtonType? type;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final ButtonStyle? buttonStyles;
+  final TextStyle? textStyle;
 
   const ButtonWidget({
     super.key,
@@ -19,6 +20,7 @@ class ButtonWidget extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.buttonStyles,
+    this.textStyle,
   });
 
   @override
@@ -96,7 +98,7 @@ class ButtonWidget extends StatelessWidget {
                       TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
                   ),
-              child: Text(text),
+              child: Text(text, style: textStyle),
             ),
     );
   }

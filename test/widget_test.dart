@@ -7,15 +7,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:healthy_mind_application/core/user_module/data/repositories/user_repository_impl.dart';
+import 'package:healthy_mind_application/features/appointment/data/repositories/doctor_repository_impl.dart';
 
 import 'package:healthy_mind_application/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    final sf = await SharedPreferences.getInstance();
-    await tester.pumpWidget(MyApp(sharedPreferences: sf));
+    await tester.pumpWidget(
+      MyApp(UserRepositoryImpl(), DoctorRepositoryImpl()),
+    );
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

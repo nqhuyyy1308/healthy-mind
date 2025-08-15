@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthy_mind_application/features/auth/bloc/auth_bloc/auth_bloc.dart';
-import 'package:healthy_mind_application/features/auth/bloc/bloc/welcome_bloc.dart';
+import 'package:healthy_mind_application/features/auth/bloc/user_bloc/user_bloc.dart';
+import 'package:healthy_mind_application/features/auth/bloc/welcome_bloc/welcome_bloc.dart';
 import 'package:healthy_mind_application/features/auth/bloc/login_bloc/login_bloc.dart';
 import 'package:healthy_mind_application/features/auth/bloc/register_bloc/register_bloc.dart';
 import 'package:healthy_mind_application/features/auth/presentation/pages/RegisterScreen.dart';
@@ -63,7 +65,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/home',
       name: 'HomeScreen',
-      builder: (context, state) => const HomeScreen(),
+      builder: (context, state) {
+        return BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state.status == AuthStatus.authenticated) {
+              context.read<UserBloc>().add(
+                GetUser(userId: context.read<AuthBloc>().state.user!.uid),
+              );
+            }
+            return const HomeScreen();
+          },
+        );
+      },
     ),
     GoRoute(
       path: '/wellcome',
